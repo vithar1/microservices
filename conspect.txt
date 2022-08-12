@@ -1,0 +1,28 @@
+twelwe factor app
+
+1. codebase 
+    You must to use a single codebase for every microservice. One 
+codebase contain development, test, staging, production code.
+2. dependencies
+    You must work with system of working with dependencies, such
+as maven or gradle or other.
+3. config
+    Discovery service must share configs between microservices.
+You shuldn't change configs via code. If you have microservice
+it relicates one hundred times and you need to change config you
+didn't must go on every one and change congig them and redeploy
+it.
+4. backing service.
+    We can swap between connections without any code changes.
+5. build, release, run
+    They are should be separated
+6. processes
+    Containers should be stateless. Don't store any session data
+on the server
+
+commands:
+    mvn package dockerfile:build  - build docker images with spotify
+    mvn spring-boot:start         - start application
+    mvn dependency:resolve        - update dependencies
+    mvn compile jib:buildTar      - create image local with jib
+    docker load --input target/jib-image.tar - extract images from tar
