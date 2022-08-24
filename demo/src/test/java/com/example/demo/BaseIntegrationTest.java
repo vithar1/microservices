@@ -17,14 +17,14 @@ import org.testcontainers.utility.DockerImageName;
 })
 @ActiveProfiles("test")
 public abstract class BaseIntegrationTest {
-    static GenericContainer<?> eureka = new GenericContainer<>(DockerImageName.parse("vigohe/eureka:issue"))
-            .withExposedPorts(8761);
-
-    @DynamicPropertySource
-    static void eurekaProperties(DynamicPropertyRegistry registry) {
-        eureka.start();
-        System.out.println(eureka.getHost());
-        String defaultZone = "http://"+eureka.getHost()+":"+eureka.getFirstMappedPort()+"/eureka";
-        registry.add("eureka.client.serviceUrl.defaultZone", () -> defaultZone);
-    }
+//    static GenericContainer<?> eureka = new GenericContainer<>(DockerImageName.parse("springcloud/eureka:latest"))
+//            .withExposedPorts(8761);
+//
+//    @DynamicPropertySource
+//    static void eurekaProperties(DynamicPropertyRegistry registry) {
+//        eureka.start();
+//        System.out.println(eureka.getHost());
+//        String defaultZone = "http://"+eureka.getHost()+":"+eureka.getFirstMappedPort()+"/eureka";
+//        registry.add("eureka.client.serviceUrl.defaultZone", () -> defaultZone);
+//    }
 }
