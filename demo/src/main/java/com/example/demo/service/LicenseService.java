@@ -6,6 +6,7 @@ import com.example.demo.repo.LicenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,12 +19,22 @@ public class LicenseService {
     ServiceConfig config;
 
 
+//    @CircuitBreaker(name = "licenseService")
+//        fallbackMethod = "buildFallBackLicense")
     public License getLicense(String licenseId, String organizationId) {
         License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
         if (null == license) {
             throw new IllegalArgumentException(String.format("license search error license_id: %s, organization_id %s", licenseId, organizationId));
         }
         return license.withComment(config.getProperty());
+    }
+
+    private License buildFallBackLicense(String licenseId, String organizationId) {
+        License license = new License();
+        license.setLicenseId(licenseId);
+        license.setOrganizationId(organizationId);
+        license.setProductName("Sorry no license information currently available");
+        return license;
     }
 
     public License createLicense(License license) {
